@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f6ff;
+            --text-color: #333;
+            --primary-color: #1845ad;
+            --secondary-color: #ff512f;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0a0a1a;
+            --text-color: #fff;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s, color 0.1s;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            border: 1px solid var(--nav-border);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: slideIn 1s 0.2s ease-out backwards;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: slideIn 1s 0.4s ease-out backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 5rem 5%;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .footer {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        padding: 5rem 5% 2rem;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .footer-section {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .footer-section h3 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1rem;
+    }
+
+    .footer-section h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 70%;
+        width: 3px;
+        background: var(--secondary-color);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .footer.animated .footer-links li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-color);
+        transform: translateX(10px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background: var(--primary-color);
+        transform: translateY(-5px);
+    }
+
+    .newsletter-form {
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        padding-right: 120px;
+    }
+
+    .newsletter-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .footer-bottom {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-bottom {
+        opacity: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+        }
+    }
+    .faculty-section {
+        padding: 5rem 5%;
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(10px);
+    }
+
+    .faculty-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .faculty-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(50px);
+        opacity: 0;
+        position: relative;
+    }
+
+    .faculty-section.animated .faculty-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .faculty-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .faculty-image {
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .faculty-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .faculty-card:hover .faculty-image img {
+        transform: scale(1.1);
+    }
+
+    .faculty-details {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .faculty-name {
+        color: var(--primary-color);
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .faculty-qualification {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .faculty-subject {
+        color: var(--text-color);
+        font-size: 1rem;
+    }
+
+    .view-profile-btn {
+        background: rgba(255,255,255,0.1);
+        color: var(--primary-color);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        margin-top: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .view-profile-btn:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .faculty-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(20px);
+        max-width: 600px;
+        width: 90%;
+        border-radius: 20px;
+        padding: 2rem;
+        position: relative;
+        transform: scale(0.8);
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+    .modal-visible .modal-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .faculty-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .faculty-image {
+            height: 250px;
+        }
+    }
+    .subjects-section {
+        padding: 5rem 5%;
+        background: rgba(255,255,255,0.03);
+    }
+
+    .subjects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .subject-icon {
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .subject-icon img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .subject-icon:hover img {
+        transform: scale(1.1);
+    }
+
+    .subject-name {
+        color: var(--text-color);
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .subject-gallery {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1rem;
+        display: none;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        width: 300px;
+        z-index: 100;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .subject-gallery.active {
+        display: grid;
+        animation: slideDown 0.3s ease;
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-image:hover {
+        transform: scale(1.05);
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -10px);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .subjects-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .subject-gallery {
+            width: 250px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div style="background: #1845ad; width: 400px; height: 400px; left: -100px; top: 200px;"></div>
+        <div style="background: #ff512f; width: 300px; height: 300px; right: -50px; top: 500px;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">MPS</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="admission.html">Admissions</a>
+            <a href="academics.html">Academics</a>
+            <a href="alumni.html">Alumni</a>
+            <a href="contact.html">Contact</a>
+            <a href="gallary.html">Gallary</a>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+    
+
+
+   
+
+    
+    </section>
+    <section class="faculty-section" id="faculty">
+        <h2 class="section-title">Our Esteemed Faculty</h2>
+        
+        <div class="faculty-grid">
+            <!-- Faculty Member 1 -->
+            <div class="faculty-card">
+                <div class="faculty-image">
+                    <img src="faculty1.jpg" alt="Dr. Ramesh Sharma">
+                </div>
+                <div class="faculty-details">
+                    <h3 class="faculty-name">Dr. Ramesh Sharma</h3>
+                    <p class="faculty-qualification">PhD in Physics, IIT Delhi</p>
+                    <p class="faculty-subject">Senior Physics Faculty</p>
+                    <button class="view-profile-btn">View Profile</button>
+                </div>
+            </div>
+    
+            <!-- Faculty Member 2 -->
+            <div class="faculty-card">
+                <div class="faculty-image">
+                    <img src="faculty2.jpg" alt="Ms. Priya Singh">
+                </div>
+                <div class="faculty-details">
+                    <h3 class="faculty-name">Ms. Priya Singh</h3>
+                    <p class="faculty-qualification">M.Sc Mathematics, BHU</p>
+                    <p class="faculty-subject">HOD Mathematics</p>
+                    <button class="view-profile-btn">View Profile</button>
+                </div>
+            </div>
+    
+            <!-- Add more faculty cards as needed -->
+        </div>
+    
+        <!-- Modal -->
+        <div class="faculty-modal" id="facultyModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body" id="modalContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="subjects-section">
+        <h2 class="section-title">Our Subjects</h2>
+        
+        <div class="subjects-grid">
+            <!-- Add new subjects by copying this block -->
+            <div class="subject-icon" data-subject="math">
+                <img src="maths.png" alt="Mathematics">
+                <div class="subject-name">Mathematics</div>
+                <div class="subject-gallery">
+                    <img src="maths.png" class="gallery-image" alt="Math Class 1">
+                    <img src="maths.png" class="gallery-image" alt="Math Lab">
+                    <img src="maths.png" class="gallery-image" alt="Math Activity">
+                    <img src="maths.png" class="gallery-image" alt="Math Class 1">
+                    <img src="maths.png" class="gallery-image" alt="Math Lab">
+                    <img src="maths.png" class="gallery-image" alt="Math Activity">
+                </div>
+            </div>
+    
+            <div class="subject-icon" data-subject="science">
+                <img src="science-icon.png" alt="Science">
+                <div class="subject-name">Science</div>
+                <div class="subject-gallery">
+                    <img src="physics-lab.jpg" class="gallery-image" alt="Physics Lab">
+                    <img src="chemistry-lab.jpg" class="gallery-image" alt="Chemistry Lab">
+                    <img src="bio-lab.jpg" class="gallery-image" alt="Biology Lab">
+                </div>
+            </div>
+    
+            <div class="subject-icon" data-subject="english">
+                <img src="english-icon.png" alt="English">
+                <div class="subject-name">English</div>
+                <div class="subject-gallery">
+                    <img src="english-class.jpg" class="gallery-image" alt="English Class">
+                    <img src="library.jpg" class="gallery-image" alt="Library">
+                    <img src="debate.jpg" class="gallery-image" alt="Debate Competition">
+                </div>
+            </div>
+            
+    
+            <!-- Add more subjects here -->
+            <!-- Copy the above block and update images/text -->
+        </div>
+    </section>
+    <section class="subjects-section">
+        
+        
+        <div class="subjects-grid">
+            <!-- Add new subjects by copying this block -->
+            <div class="subject-icon" data-subject="math">
+                <img src="math-icon.png" alt="Mathematics">
+                <div class="subject-name">Mathematics</div>
+                <div class="subject-gallery">
+                    <img src="math-class1.jpg" class="gallery-image" alt="Math Class 1">
+                    <img src="math-lab.jpg" class="gallery-image" alt="Math Lab">
+                    <img src="math-activity.jpg" class="gallery-image" alt="Math Activity">
+                </div>
+            </div>
+    
+            <div class="subject-icon" data-subject="science">
+                <img src="science-icon.png" alt="Science">
+                <div class="subject-name">Science</div>
+                <div class="subject-gallery">
+                    <img src="physics-lab.jpg" class="gallery-image" alt="Physics Lab">
+                    <img src="chemistry-lab.jpg" class="gallery-image" alt="Chemistry Lab">
+                    <img src="bio-lab.jpg" class="gallery-image" alt="Biology Lab">
+                </div>
+            </div>
+    
+            <div class="subject-icon" data-subject="english">
+                <img src="english-icon.png" alt="English">
+                <div class="subject-name">English</div>
+                <div class="subject-gallery">
+                    <img src="english-class.jpg" class="gallery-image" alt="English Class">
+                    <img src="library.jpg" class="gallery-image" alt="Library">
+                    <img src="debate.jpg" class="gallery-image" alt="Debate Competition">
+                </div>
+            </div>
+            
+    
+            <!-- Add more subjects here -->
+            <!-- Copy the above block and update images/text -->
+        </div>
+    </section>
+    
+    
+    
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3>About MPS</h3>
+                <p style="color: var(--text-color); line-height: 1.6;">
+                    Modern Public School - Shaping futures through quality education since 2001. 
+                    Affiliated with CBSE, committed to holistic development.
+                </p>
+                <div class="social-links">
+                    <a href="#" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Admissions</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Academic Calendar</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> School Gallery</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Careers</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                </ul>
+            </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Modern Public School<br>
+                            Education City, Knowledge Park<br>
+                            India
+                        </a>
+                    </li>
+                    <li><a href="tel:+911234567890"><i class="fas fa-phone"></i> +91 12345 67890</a></li>
+                    <li><a href="mailto:info@mps.com"><i class="fas fa-envelope"></i> info@mps.com</a></li>
+                </ul>
+            </div>
+    
+            <!-- Newsletter -->
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p style="color: var(--text-color); margin-bottom: 1rem;">
+                    Subscribe to our newsletter for latest updates
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p style="color: var(--text-color);">
+                © 2024 Modern Public School. All rights reserved. 
+                <span style="display: block; margin-top: 0.5rem;">
+                    Designed with <i class="fas fa-heart" style="color: #ff512f;"></i> by Education Team
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            isDark = true;
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+    <script>
+        // Footer animation
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Animate list items with delay
+                    document.querySelectorAll('.footer-links li').forEach((li, index) => {
+                        setTimeout(() => {
+                            li.style.opacity = '1';
+                            li.style.transform = 'translateX(0)';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        footerObserver.observe(document.querySelector('#footer'));
+    
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            // Add your newsletter logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+    <script>
+        // Faculty modal functionality
+        const profileButtons = document.querySelectorAll('.view-profile-btn');
+        const modal = document.getElementById('facultyModal');
+        const closeModal = document.querySelector('.close-modal');
+    
+        const facultyData = {
+            "Dr. Ramesh Sharma": {
+                image: "faculty1.jpg",
+                qualification: "PhD in Physics, IIT Delhi",
+                experience: "15+ years teaching experience",
+                achievements: [
+                    "Awarded Best Teacher by State Government (2022)",
+                    "Published 20+ research papers",
+                    "NTSE Mentor"
+                ],
+                contact: "r.sharma@school.edu"
+            },
+            "Ms. Priya Singh": {
+                image: "faculty2.jpg",
+                qualification: "M.Sc Mathematics, BHU",
+                experience: "12 years teaching experience",
+                achievements: [
+                    "100% Board result for 5 consecutive years",
+                    "IMO Gold Medalist Mentor",
+                    "Author of 'Vedic Mathematics Made Easy'"
+                ],
+                contact: "p.singh@school.edu"
+            }
+        };
+    
+        profileButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const facultyName = button.parentElement.querySelector('.faculty-name').textContent;
+                const data = facultyData[facultyName];
+                
+                const modalHtml = `
+                    <div class="modal-image">
+                        <img src="${data.image}" alt="${facultyName}" style="width: 150px; border-radius: 50%; margin: 0 auto 1rem; display: block;">
+                    </div>
+                    <h3 style="color: var(--primary-color); text-align: center; margin-bottom: 1rem;">${facultyName}</h3>
+                    <div style="color: var(--text-color); line-height: 1.8;">
+                        <p><strong>Qualification:</strong> ${data.qualification}</p>
+                        <p><strong>Experience:</strong> ${data.experience}</p>
+                        <p><strong>Notable Achievements:</strong></p>
+                        <ul style="margin-left: 1.5rem;">
+                            ${data.achievements.map(ach => `<li>${ach}</li>`).join('')}
+                        </ul>
+                        <p><strong>Contact:</strong> ${data.contact}</p>
+                    </div>
+                `;
+    
+                document.getElementById('modalContent').innerHTML = modalHtml;
+                modal.classList.add('modal-visible');
+                modal.style.display = 'flex';
+            });
+        });
+    
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('modal-visible');
+            modal.style.display = 'none';
+        });
+    
+        window.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.classList.remove('modal-visible');
+                modal.style.display = 'none';
+            }
+        });
+    
+        // Animation trigger
+        const facultyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        facultyObserver.observe(document.querySelector('#faculty'));
+    </script>
+    <script>
+        // Handle subject clicks
+        document.querySelectorAll('.subject-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                // Close other open galleries
+                document.querySelectorAll('.subject-gallery').forEach(gallery => {
+                    if(gallery !== this.querySelector('.subject-gallery')) {
+                        gallery.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current gallery
+                const gallery = this.querySelector('.subject-gallery');
+                gallery.classList.toggle('active');
+            });
+        });
+    
+        // Close galleries when clicking outside
+        document.addEventListener('click', function(e) {
+            if(!e.target.closest('.subject-icon')) {
+                document.querySelectorAll('.subject-gallery').forEach(gallery => {
+                    gallery.classList.remove('active');
+                });
+            }
+        });
+    
+        // Prevent gallery clicks from closing
+        document.querySelectorAll('.subject-gallery').forEach(gallery => {
+            gallery.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>

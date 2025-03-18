@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f6ff;
+            --text-color: #333;
+            --primary-color: #1845ad;
+            --secondary-color: #ff512f;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0a0a1a;
+            --text-color: #fff;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s, color 0.1s;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            border: 1px solid var(--nav-border);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: slideIn 1s 0.2s ease-out backwards;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: slideIn 1s 0.4s ease-out backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 5rem 5%;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .announcements {
+        padding: 5rem 5%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .announcements-content {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.6s ease-out;
+    }
+
+    .announcements-video-container {
+        position: relative;
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.6s ease-out;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .announcements.animated .announcements-content,
+    .announcements.animated .announcements-video-container {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        border-radius: 15px;
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .announcements-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        object-fit: cover;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .play-button i {
+        font-size: 24px;
+        color: white;
+        margin-left: 5px;
+    }
+
+    .play-button:hover {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .announcements {
+            grid-template-columns: 1fr;
+        }
+    }
+    .team-section {
+        padding: 5rem 5%;
+        background: rgba(255,255,255,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+
+    .team-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255,255,255,0.1);
+        cursor: pointer;
+    }
+
+    .team-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .team-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.1),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    .team-card:hover::before {
+        left: 100%;
+    }
+
+    .member-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: -70px auto 1rem;
+        border: 3px solid var(--primary-color);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: scale(0);
+    }
+
+    .member-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .member-image:hover img {
+        transform: scale(1.1);
+    }
+
+    .member-info {
+        margin-top: 70px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.4s ease;
+    }
+
+    .member-name {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+
+    .member-role {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .member-desc {
+        color: var(--text-color);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
+    .read-more {
+        background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+        color: white;
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    .read-more:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(24,69,173,0.3);
+    }
+
+    .team-section.animated .team-title {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .team-section.animated .team-card {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    .team-section.animated .member-image {
+        transform: scale(1);
+    }
+
+    .team-section.animated .member-info {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+    }
+
+    .team-section.animated .read-more {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+    }
+
+    @media (max-width: 1024px) {
+        .team-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .team-card {
+            max-width: 350px;
+            margin: 0 auto;
+        }
+    }
+    .image-slider-section {
+        padding: 4rem 0;
+        background: #f8f9fa00;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .slider-container {
+        width: 100%;
+        position: relative;
+        height: 300px;
+    }
+
+    .slider-track {
+        display: flex;
+        width: 200%; /* Double width for seamless loop */
+        animation: slide 20s linear infinite;
+        height: 100%;
+    }
+
+    .slider-track:hover {
+        animation-play-state: paused;
+    }
+
+    .slide {
+        flex: 0 0 12.5%;
+        height: 100%;
+        padding: 0 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+    }
+
+    .slide:hover img {
+        filter: grayscale(0);
+        transform: scale(1.05);
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .slider-container {
+            height: 200px;
+        }
+        
+        .slide {
+            flex: 0 0 25%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slider-container {
+            height: 150px;
+        }
+    }
+    .footer {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        padding: 5rem 5% 2rem;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .footer-section {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .footer-section h3 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1rem;
+    }
+
+    .footer-section h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 70%;
+        width: 3px;
+        background: var(--secondary-color);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .footer.animated .footer-links li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-color);
+        transform: translateX(10px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgb(255, 255, 255);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background: var(--primary-color);
+        transform: translateY(-5px);
+    }
+
+    .newsletter-form {
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        padding-right: 120px;
+    }
+
+    .newsletter-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .footer-bottom {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-bottom {
+        opacity: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+        }
+    }
+     .stats-section {
+        padding: 5rem 5%;
+        background: rgba(255, 255, 255, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-card:nth-child(1) { transition-delay: 0.2s; }
+    .stat-card:nth-child(2) { transition-delay: 0.4s; }
+    .stat-card:nth-child(3) { transition-delay: 0.6s; }
+    .stat-card:nth-child(4) { transition-delay: 0.8s; }
+
+    .stats-section.animated .stat-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        transform: scale(1.2);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: rgb(216, 218, 70);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .stat-label {
+        color: var(--secondary-color);
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .stat-card:hover {
+        animation: pulse 1.5s infinite;
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+     .image-slider-section {
+        padding: 4rem 0;
+        background: #f8f9fa00;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .slider-container {
+        width: 100%;
+        position: relative;
+        height: 300px;
+    }
+
+    .slider-track {
+        display: flex;
+        width: 200%; /* Double width for seamless loop */
+        animation: slide 20s linear infinite;
+        height: 100%;
+    }
+
+    .slider-track:hover {
+        animation-play-state: paused;
+    }
+
+    .slide {
+        flex: 0 0 12.5%;
+        height: 100%;
+        padding: 0 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(100%);
+        transition: all 0.3s ease;
+    }
+
+    .slide:hover img {
+        filter: grayscale(0);
+        transform: scale(1.05);
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .slider-container {
+            height: 200px;
+        }
+        
+        .slide {
+            flex: 0 0 25%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slider-container {
+            height: 150px;
+        }
+    }
+    .toppers-section {
+        padding: 6rem 5%;
+        background: linear-gradient(45deg, #0a0a1a, #1a1a2e);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .toppers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .topper-card {
+        background: rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.6s ease;
+        cursor: pointer;
+    }
+
+    .topper-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, var(--primary-color), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+        opacity: 0.3;
+    }
+
+    @keyframes shine {
+        0% { transform: rotate(45deg) translateX(-150%); }
+        100% { transform: rotate(45deg) translateX(150%); }
+    }
+
+    .topper-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: -80px auto 1rem;
+        border: 3px solid var(--primary-color);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 0 30px rgba(24,69,173,0.3);
+    }
+
+    .topper-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .topper-card:hover .topper-image {
+        transform: scale(1.1);
+        box-shadow: 0 0 50px rgba(24,69,173,0.5);
+    }
+
+    .topper-card:hover .topper-image img {
+        transform: scale(1.1);
+    }
+
+    .topper-rank {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: var(--secondary-color);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .topper-details {
+        margin-top: 1.5rem;
+    }
+
+    .topper-name {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .topper-marks {
+        color: var(--secondary-color);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .topper-quote {
+        color: rgba(255,255,255,0.8);
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+
+    .toppers-section.animated .topper-card {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .topper-card:nth-child(1) { transition-delay: 0.2s; }
+    .topper-card:nth-child(2) { transition-delay: 0.4s; }
+    .topper-card:nth-child(3) { transition-delay: 0.6s; }
+    .topper-card:nth-child(4) { transition-delay: 0.8s; }
+
+    @media (max-width: 768px) {
+        .toppers-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .topper-card {
+            max-width: 350px;
+            margin: 0 auto;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div style="background: #1845ad; width: 400px; height: 400px; left: -100px; top: 200px;"></div>
+        <div style="background: #ff512f; width: 300px; height: 300px; right: -50px; top: 500px;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">MPS</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="admission.html">Admissions</a>
+            <a href="academics.html">Academics</a>
+            <a href="alumni.html">Alumni</a>
+            <a href="contact.html">Contact</a>
+            <a href="gallary.html">Gallary</a>
+            
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Modern Public School</h1>
+            <p>Shaping futures through quality education and holistic development</p>
+            <button class="cta-button" onclick="window.location.href='#announcements'">Announcments</button>
+        </div>         <button class="cta-button" onclick="window.location.href='mpd.html'">Mandatory Public Disclosure</button>
+        
+        <button class="cta-button" onclick="window.location.href='admission.html'">Explore Admissions</button>
+    </section>
+    <section class="announcements" id="announcements">
+        <div class="announcements-content">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color);">
+                Latest Announcements
+            </h2>
+            <div class="announcement-list">
+                <div class="announcement-item" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">
+                        Annual Sports Day 2024
+                    </h3>
+                    <p style="color: var(--text-color);">
+                        Join us for our annual sports day celebration on March 15th. Registrations now open!
+                    </p>
+                </div>
+                <div class="announcement-item" style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">
+                        New Smart Classrooms
+                    </h3>
+                    <p style="color: var(--text-color);">
+                        We've upgraded 15 classrooms with latest interactive learning technology.
+                    </p>
+                </div>
+                <div class="announcement-item">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">
+                        Parent-Teacher Meeting
+                    </h3>
+                    <p style="color: var(--text-color);">
+                        Schedule for PTM released. Check portal for your time slot.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="announcements-video-container">
+            <div class="video-wrapper">
+                <video class="announcements-video" poster="thumbnail.png">
+                    <source src="announcment.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="play-button" onclick="toggleVideo()">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="stats-section" id="stats">
+    <div class="stats-grid">
+        <!-- Teachers Card -->
+        <div class="stat-card">
+            <i class="fas fa-chalkboard-teacher stat-icon"></i>
+            <span class="stat-number" data-count="150">0</span>
+            <span class="stat-label">Qualified Teachers</span>
+        </div>
+
+        <!-- Students Card -->
+        <div class="stat-card">
+            <i class="fas fa-user-graduate stat-icon"></i>
+            <span class="stat-number" data-count="2500">0</span>
+            <span class="stat-label">Happy Students</span>
+        </div>
+
+        <!-- Classes Card -->
+        <div class="stat-card">
+            <i class="fas fa-school stat-icon"></i>
+            <span class="stat-number" data-count="45">0</span>
+            <span class="stat-label">Modern Classes</span>
+        </div>
+
+        <!-- Sections Card -->
+        <div class="stat-card">
+            <i class="fas fa-layer-group stat-icon"></i>
+            <span class="stat-number" data-count="120">0</span>
+            <span class="stat-label">Active Sections</span>
+        </div>
+    </div>
+</section>
+<section class="toppers-section" id="toppers">
+    <h2 class="section-title">Our Academic Champions</h2>
+    
+    <div class="toppers-grid">
+        <!-- Topper 1 -->
+        <div class="topper-card">
+            <div class="topper-rank">1</div>
+            <div class="topper-image">
+                <img src="mps2.png" alt="School Topper 2024">
+            </div>
+            <div class="topper-details">
+                <h3 class="topper-name">Rahul Sharma</h3>
+                <div class="topper-marks">98.4%</div>
+                <p class="topper-quote">"Consistent effort beats talent!"</p>
+            </div>
+        </div>
+
+        <!-- Topper 2 -->
+        <div class="topper-card">
+            <div class="topper-rank">2</div>
+            <div class="topper-image">
+                <img src="topper2.jpg" alt="Second Topper 2024">
+            </div>
+            <div class="topper-details">
+                <h3 class="topper-name">Priya Singh</h3>
+                <div class="topper-marks">97.8%</div>
+                <p class="topper-quote">"Discipline is the key to success"</p>
+            </div>
+        </div>
+
+        <!-- Topper 3 -->
+        <div class="topper-card">
+            <div class="topper-rank">3</div>
+            <div class="topper-image">
+                <img src="topper3.jpg" alt="Third Topper 2024">
+            </div>
+            <div class="topper-details">
+                <h3 class="topper-name">Aarav Gupta</h3>
+                <div class="topper-marks">97.2%</div>
+                <p class="topper-quote">"Never underestimate revision"</p>
+            </div>
+        </div>
+
+</section>
+    <section class="team-section" id="team">
+        <h2 class="team-title">Our Leadership Team</h2>
+        <div class="team-grid">
+            <!-- Member 1 -->
+            <div class="team-card">
+                <div class="member-image">
+                    <img src="kedar.png" alt="Shri Kedar Mal Bhala">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Shri Kedar Mal Bhala</h3>
+                    <p class="member-role">Chairman</p>
+                    <p class="member-desc">Visionary leader with 20+ years experience in transformative education.</p>
+                   
+                </div>
+            </div>
+    
+            <!-- Member 2 -->
+            <div class="team-card">
+                <div class="member-image">
+                    <img src="madhu.png" alt="Shri Madhu Sudan Bihani">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Shri Madhu Sudan Bihani</h3>
+                    <p class="member-role">Gen. Secretary, Education</p>
+                    <p class="member-desc">Curriculum development expert and student welfare advocate.</p>
+                   
+                </div>
+            </div>
+            
+    
+            <!-- Member 3 -->
+            <div class="team-card">
+                <div class="member-image">
+                    <img src="reeta.png" alt="Vice Principal Mr. David Smith">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">ms reeta bhargav </h3>
+                    <p class="member-role">Principal</p>
+                    <p class="member-desc">Curriculum development expert and student welfare advocate.</p>
+                  
+                </div>
+            </div>
+       <!-- Member 3 -->
+       <div class="team-card">
+        <div class="member-image">
+            <img src="reeta.png" alt="Vice Principal Mr. David Smith">
+        </div>
+        <div class="member-info">
+            <h3 class="member-name">ms reeta bhargav </h3>
+            <p class="member-role">Principal</p>
+            <p class="member-desc">Curriculum development expert and student welfare advocate.</p>
+          
+        </div>
+    </div>
+    <button class="read-more" onclick="window.location.href='readmore0.html'">Read More</button>
+    <button class="read-more" onclick="window.location.href='readmore1.html'">Read More</button>
+    <button class="read-more" onclick="window.location.href='readmore2.html'">Read More</button>
+    <button class="read-more" onclick="window.location.href='readmore3.html'">Read More</button>
+</section>
+
+<section class="image-slider-section">
+    <div class="slider-container">
+        <div class="slider-track">
+            <!-- Duplicate images for seamless loop -->
+            <div class="slide">
+                <img src="reeta.png" alt="Brand 1">
+            </div>
+            <div class="slide">
+                <img src="reeta.png" alt="Brand 2">
+            </div>
+            <div class="slide">
+                <img src="madhu.png" alt="Brand 3">
+            </div>
+            <div class="slide">
+                <img src="kedar.png" alt="Brand 4">
+            </div>
+            <div class="slide">
+                <img src="reeta.png" alt="Brand 5">
+            </div>
+            <div class="slide">
+                <img src="kedar.png" alt="Brand 6">
+            </div>
+            <div class="slide">
+                <img src="reeta.png" alt="Brand 7">
+            </div>
+            <div class="slide">
+                <img src="madhu.png" alt="Brand 8">
+            </div>
+           
+         
+</section>
+<footer class="footer" id="footer">
+    <div class="footer-content">
+        <!-- About Section -->
+        <div class="footer-section">
+            <h3>About MPS</h3>
+            <p style="color: var(--text-color); line-height: 1.6;">
+                Maheshwari Public School - Shaping futures through quality education since 2011. 
+                Affiliated with CBSE, committed to holistic development.
+            </p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/mps.pratapnagar.7?mibextid=ZbWKwL" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/mpspnrays/?igsh=MXZwMGxuOTE3N2s3bw%3D%3D#" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCU7te7VzVWe115gF8GeYTrg" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <a href="admission.html">>admission</a>
+                    <a href="acadmiccalander.html">>Academic calander</a>
+                    <a href="gallary.html">>school galary</a>
+                
+            </ul>
+        </div>
+        <!-- Contact Info -->
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+                <li>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Maheshwari Public School<br>
+                        pratap nagar jaipur<br>
+                        India
+                    </a>
+                </li>
+                <li><a href="+91 9116929333"><i class="fas fa-phone"></i> +91 9116929333 </a></li>
+                <li><a href="mailto:info@mps.com"><i class="fas fa-envelope"></i> mpspnjpr@mpspnjpr.com</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+            <h3>Newsletter</h3>
+            <p style="color: var(--text-color); margin-bottom: 1rem;">
+                Subscribe to our newsletter for latest updates
+            </p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p style="color: var(--text-color);">
+            © 2024 Modern Public School. All rights reserved. 
+            <span style="display: block; margin-top: 0.5rem;">
+                Designed with <i class="fas fa-heart" style="color: #ff512f;"></i> by Education Team
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            isDark = true;
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+    <script>
+        // Animation trigger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        observer.observe(document.querySelector('#announcements'));
+    
+        // Video controls
+        const video = document.querySelector('.announcements-video');
+        const playButton = document.querySelector('.play-button');
+    
+        function toggleVideo() {
+            if (video.paused) {
+                video.play();
+                playButton.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                video.pause();
+                playButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+    
+        video.addEventListener('click', toggleVideo);
+        video.addEventListener('play', () => {
+            playButton.style.opacity = '0';
+        });
+        video.addEventListener('pause', () => {
+            playButton.style.opacity = '1';
+        });
+    </script>
+    <script>
+        // Team section animation
+        const teamObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        teamObserver.observe(document.querySelector('#team'));
+    
+        // Add hover effect to entire card
+        document.querySelectorAll('.team-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if(!e.target.classList.contains('read-more')) {
+                    window.location = e.target.closest('.team-card').querySelector('.read-more').onclick();
+                }
+            });
+        });
+    
+        // Add page transition animation
+        document.querySelectorAll('.read-more').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('data-profile');
+                }, 500);
+            });
+        });
+    </script>
+    <script>
+        // Footer animation
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Animate list items with delay
+                    document.querySelectorAll('.footer-links li').forEach((li, index) => {
+                        setTimeout(() => {
+                            li.style.opacity = '1';
+                            li.style.transform = 'translateX(0)';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        footerObserver.observe(document.querySelector('#footer'));
+    
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            // Add your newsletter logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+    <script>
+    // Animation trigger
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                startCounters();
+            }
+        });
+    }, { threshold: 0.1 });
+
+    statsObserver.observe(document.querySelector('#stats'));
+
+    // Counter animation
+    function startCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200; // Lower number = faster
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-count');
+                const count = +counter.innerText;
+                const increment = target / speed;
+
+                if(count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            }
+
+            updateCount();
+        });
+    }
+
+    // Add hover animation pause
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.animationPlayState = 'paused';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.animationPlayState = 'running';
+        });
+    });
+</script>
+<script>
+    // Toppers animation
+    const toppersObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    toppersObserver.observe(document.querySelector('#toppers'));
+
+    // Hover effect for cards
+    document.querySelectorAll('.topper-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const x = e.pageX - card.offsetLeft;
+            const y = e.pageY - card.offsetTop;
+            
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(${(y - card.offsetHeight/2) / 15}deg)
+                rotateY(${-(x - card.offsetWidth/2) / 15}deg)
+            `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0) rotateY(0)';
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f6ff;
+            --text-color: #333;
+            --primary-color: #1845ad;
+            --secondary-color: #ff512f;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0a0a1a;
+            --text-color: #fff;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s, color 0.1s;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            border: 1px solid var(--nav-border);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: slideIn 1s 0.2s ease-out backwards;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: slideIn 1s 0.4s ease-out backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 5rem 5%;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .footer {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        padding: 5rem 5% 2rem;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .footer-section {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .footer-section h3 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1rem;
+    }
+
+    .footer-section h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 70%;
+        width: 3px;
+        background: var(--secondary-color);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .footer.animated .footer-links li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-color);
+        transform: translateX(10px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background: var(--primary-color);
+        transform: translateY(-5px);
+    }
+
+    .newsletter-form {
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        padding-right: 120px;
+    }
+
+    .newsletter-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .footer-bottom {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-bottom {
+        opacity: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+        }
+    }
+    .calendar-section {
+        padding: 5rem 5%;
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(10px);
+    }
+
+    .calendar-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .month-calendar {
+        background: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .month-calendar:hover {
+        transform: translateY(-5px);
+    }
+
+    .calendar-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    .calendar-table th {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .calendar-table td {
+        padding: 0.5rem;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.1);
+        position: relative;
+    }
+
+    .holiday {
+        background: rgba(255,0,0,0.1);
+        color: #ff4444;
+        font-weight: bold;
+    }
+
+    .festival {
+        background: rgba(0,255,0,0.1);
+        color: #00c851;
+    }
+
+    .vacation {
+        background: rgba(255,193,7,0.1);
+        color: #ffd700;
+    }
+
+    .event-marker {
+        position: absolute;
+        bottom: 2px;
+        font-size: 0.6rem;
+        width: 100%;
+        left: 0;
+    }
+
+    .calendar-search {
+        max-width: 500px;
+        margin: 1rem auto 3rem;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        padding-right: 40px;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    @media (max-width: 768px) {
+        .calendar-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div style="background: #1845ad; width: 400px; height: 400px; left: -100px; top: 200px;"></div>
+        <div style="background: #ff512f; width: 300px; height: 300px; right: -50px; top: 500px;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">MPS</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="admission.html">Admissions</a>
+            <a href="academics.html">Academics</a>
+            <a href="alumni.html">Alumni</a>
+            <a href="contact.html">Contact</a>
+            <a href="gallary.html">Gallary</a>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+    
+
+
+   
+
+    
+    </section>
+    <section class="calendar-section" id="calendar">
+        <h2 class="section-title">.</h2>
+        <h2 class="section-title">Academic Calendar 2024-25</h2>
+        
+       
+        
+    
+        <div class="calendar-container" id="calendarContainer">
+            <!-- January -->
+            <div class="month-calendar">
+                <h3>January 2024</h3>
+                <table class="calendar-table">
+                    <tr>
+                        <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                    </tr>
+                    <!-- Add rows with dates -->
+                    <tr>
+                        <td class="holiday">1<div class="event-marker">New Year</div></td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                    </tr>
+                    <!-- Add more rows -->
+                    <tr>
+                        <td class="holiday">1<div class="event-marker">New Year</div></td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td class="holiday">1<div class="event-marker">New Year</div></td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td class="holiday">1<div class="event-marker">New Year</div></td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </div>
+    
+            <!-- February -->
+            <div class="month-calendar">
+                <h3>February 2024</h3>
+                <table class="calendar-table">
+                    <tr>
+                        <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td>29</td>
+                        <td class="festival">30<div class="event-marker">Maha Shivratri</div></td>
+                        <td>31</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+                    <!-- Add more rows -->
+                </table>
+            </div>
+    
+            <!-- Add remaining months following same pattern -->
+        </div>
+    </section>
+</section>
+<section class="calendar-section" id="calendar">
+
+    
+ 
+
+    <div class="calendar-container" id="calendarContainer">
+        <!-- January -->
+        <div class="month-calendar">
+            <h3>January 2024</h3>
+            <table class="calendar-table">
+                <tr>
+                    <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                </tr>
+                <!-- Add rows with dates -->
+                <tr>
+                    <td class="holiday">1<div class="event-marker">New Year</div></td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                </tr>
+                <!-- Add more rows -->
+            </table>
+        </div>
+
+        <!-- February -->
+        <div class="month-calendar">
+            <h3>February 2024</h3>
+            <table class="calendar-table">
+                <tr>
+                    <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                </tr>
+                <tr>
+                    <td>28</td>
+                    <td>29</td>
+                    <td class="festival">30<div class="event-marker">Maha Shivratri</div></td>
+                    <td>31</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                </tr>
+                <!-- Add more rows -->
+            </table>
+        </div>
+
+        <!-- Add remaining months following same pattern -->
+    </div>
+</section>
+<footer class="footer" id="footer">
+    <div class="footer-content">
+        <!-- About Section -->
+        <div class="footer-section">
+            <h3>About MPS</h3>
+            <p style="color: var(--text-color); line-height: 1.6;">
+                Maheshwari Public School - Shaping futures through quality education since 2011. 
+                Affiliated with CBSE, committed to holistic development.
+            </p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/mps.pratapnagar.7?mibextid=ZbWKwL" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/mpspnrays/?igsh=MXZwMGxuOTE3N2s3bw%3D%3D#" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCU7te7VzVWe115gF8GeYTrg" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <a href="admission.html">>admission</a>
+                    <a href="acadmiccalander.html">>Academic calander</a>
+                    <a href="gallary.html">>school galary</a>
+                
+            </ul>
+        </div>
+        <!-- Contact Info -->
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+                <li>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Maheshwari Public School<br>
+                        pratap nagar jaipur<br>
+                        India
+                    </a>
+                </li>
+                <li><a href="+91 9116929333"><i class="fas fa-phone"></i> +91 9116929333 </a></li>
+                <li><a href="mailto:info@mps.com"><i class="fas fa-envelope"></i> mpspnjpr@mpspnjpr.com</a></li>
+            </ul>
+        </div>
+    
+            <!-- Newsletter -->
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p style="color: var(--text-color); margin-bottom: 1rem;">
+                    Subscribe to our newsletter for latest updates
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p style="color: var(--text-color);">
+                © 2024 Modern Public School. All rights reserved. 
+                <span style="display: block; margin-top: 0.5rem;">
+                    Designed with <i class="fas fa-heart" style="color: #ff512f;"></i> by Education Team
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            isDark = true;
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+    <script>
+        // Footer animation
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Animate list items with delay
+                    document.querySelectorAll('.footer-links li').forEach((li, index) => {
+                        setTimeout(() => {
+                            li.style.opacity = '1';
+                            li.style.transform = 'translateX(0)';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        footerObserver.observe(document.querySelector('#footer'));
+    
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            // Add your newsletter logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+    <script>
+        // Sample data structure for calendar (expand with actual dates)
+        const calendarData = [
+            {
+                month: "April 2024",
+                days: [
+                    { date: 1, day: "Mon", event: null },
+                    { date: 15, day: "Mon", event: "Summer Vacation Start", type: "vacation" },
+                    // Add all dates with events
+                ]
+            },
+            // Add other months
+        ];
+    
+        // Search functionality
+        document.getElementById('calendarSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const months = document.querySelectorAll('.month-calendar');
+    
+            months.forEach(month => {
+                const monthName = month.querySelector('h3').textContent.toLowerCase();
+                const events = month.textContent.toLowerCase();
+                month.style.display = (monthName.includes(searchTerm) || events.includes(searchTerm) ? 
+                                     'block' : 'none';
+            });
+        });
+    
+        // Generate calendar dynamically (pseudo code)
+        function generateCalendar() {
+            const container = document.getElementById('calendarContainer');
+            
+            calendarData.forEach(monthData => {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month-calendar';
+                monthDiv.innerHTML = `
+                    <h3>${monthData.month}</h3>
+                    <table class="calendar-table">
+                        <!-- Generate table rows based on monthData.days -->
+                    </table>
+                `;
+                container.appendChild(monthDiv);
+            });
+        }
+    
+        // Initialize calendar
+        generateCalendar();
+    </script>
+    
+</body>
+</html>

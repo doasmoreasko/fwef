@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f6ff;
+            --text-color: #333;
+            --primary-color: #1845ad;
+            --secondary-color: #ff512f;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0a0a1a;
+            --text-color: #fff;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --nav-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s, color 0.1s;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .floating-shapes div {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            border: 1px solid var(--nav-border);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            margin-top: 100px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero p {
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            animation: slideIn 1s 0.2s ease-out backwards;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: slideIn 1s 0.4s ease-out backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 5rem 5%;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .footer {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        padding: 5rem 5% 2rem;
+        position: relative;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .footer-section {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .footer-section h3 {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 1rem;
+    }
+
+    .footer-section h3::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 70%;
+        width: 3px;
+        background: var(--secondary-color);
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+
+    .footer-links li {
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    .footer.animated .footer-links li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-color);
+        transform: translateX(10px);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background: var(--primary-color);
+        transform: translateY(-5px);
+    }
+
+    .newsletter-form {
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: var(--text-color);
+        padding-right: 120px;
+    }
+
+    .newsletter-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(45deg, var(--primary-color), #23a2f6);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .newsletter-button:hover {
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .footer-bottom {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+
+    .footer.animated .footer-bottom {
+        opacity: 1;
+    }
+
+    @media (max-width: 1024px) {
+        .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+        }
+    }
+    .about-section {
+        padding: 8rem 5%;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(45deg, rgba(24,69,173,0.1), rgba(255,81,47,0.1));
+    }
+
+    .about-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .about-content {
+        position: relative;
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s ease;
+    }
+
+    .about-media {
+        position: relative;
+        height: 500px;
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s ease;
+    }
+
+    .about-section.animated .about-content,
+    .about-section.animated .about-media {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .about-heading {
+        font-size: 2.8rem;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .about-text {
+        color: var(--text-color);
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+
+    .about-features {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .about-feature {
+        padding: 1.5rem;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        transform: scale(0.95);
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .about-feature i {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .about-section.animated .about-feature {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .about-feature:nth-child(1) { transition-delay: 0.2s; }
+    .about-feature:nth-child(2) { transition-delay: 0.4s; }
+    .about-feature:nth-child(3) { transition-delay: 0.6s; }
+    .about-feature:nth-child(4) { transition-delay: 0.8s; }
+
+    .main-image {
+        position: absolute;
+        width: 70%;
+        height: 70%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        transform: rotate(-3deg);
+        z-index: 2;
+        transition: all 0.5s ease;
+    }
+
+    .main-image:hover {
+        transform: rotate(0) scale(1.05);
+    }
+
+    .main-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(24,69,173,0.3);
+        mix-blend-mode: multiply;
+    }
+
+    .floating-image {
+        position: absolute;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        transform: rotate(0);
+        transition: all 0.5s ease;
+    }
+
+    .floating-image:hover {
+        transform: rotate(3deg) scale(1.1);
+        z-index: 3;
+    }
+
+    .img-1 {
+        width: 200px;
+        height: 200px;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .img-2 {
+        width: 250px;
+        height: 250px;
+        top: 0;
+        right: 50px;
+        animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        transform: translateY(30px);
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .about-section.animated .stat-box {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .stat-box:nth-child(1) { transition-delay: 0.2s; }
+    .stat-box:nth-child(2) { transition-delay: 0.4s; }
+    .stat-box:nth-child(3) { transition-delay: 0.6s; }
+
+    @media (max-width: 1024px) {
+        .about-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .about-media {
+            height: 600px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .about-heading {
+            font-size: 2.2rem;
+        }
+        
+        .about-features {
+            grid-template-columns: 1fr;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div style="background: #1845ad; width: 400px; height: 400px; left: -100px; top: 200px;"></div>
+        <div style="background: #ff512f; width: 300px; height: 300px; right: -50px; top: 500px;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">MPS</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="admission.html">Admissions</a>
+            <a href="academics.html">Academics</a>
+            <a href="alumni.html">Alumni</a>
+            <a href="contact.html">Contact</a>
+            <a href="gallary.html">Gallary</a>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+    
+
+
+   <!-- Add HTML -->
+<section class="about-section" id="about">
+    <div class="about-container">
+        <div class="about-content">
+            <h2 class="about-heading">Shaping Futures Through Excellence in Education</h2>
+            <p class="about-text">
+                Established in 2001, Modern Public School has been at the forefront of innovative education, 
+                combining academic rigor with holistic development. Our state-of-the-art campus spans 10 acres 
+                of green, technology-enabled learning environment.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Pass Percentage</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Awards Won</div>
+                </div>
+            </div>
+
+            <ul class="about-features">
+                <li class="about-feature">
+                    <i class="fas fa-atom"></i>
+                    <h4>STEM Education</h4>
+                    <p>Advanced labs and research facilities</p>
+                </li>
+                <li class="about-feature">
+                    <i class="fas fa-palette"></i>
+                    <h4>Creative Arts</h4>
+                    <p>Comprehensive arts curriculum</p>
+                </li>
+                <li class="about-feature">
+                    <i class="fas fa-running"></i>
+                    <h4>Sports Academy</h4>
+                    <p>Olympic-standard training facilities</p>
+                </li>
+                <li class="about-feature">
+                    <i class="fas fa-heart"></i>
+                    <h4>Mental Wellness</h4>
+                    <p>Counseling and mindfulness programs</p>
+                </li>
+            </ul>
+
+            <button class="cta-button" onclick="window.location.href='admission.html'">
+                Explore Our Campus
+            </button>
+        </div>
+
+        <div class="about-media">
+            <div class="main-image">
+                <div class="image-overlay"></div>
+                <img src="thumbnail.png" alt="School Campus">
+            </div>
+            <div class="floating-image img-1">
+                <img src="reeta.png" alt="Science Lab">
+            </div>
+            <div class="floating-image img-2">
+                <img src="madhu.png" alt="Sports Field">
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+    </section>
+    
+    
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3>About MPS</h3>
+                <p style="color: var(--text-color); line-height: 1.6;">
+                    Modern Public School - Shaping futures through quality education since 2001. 
+                    Affiliated with CBSE, committed to holistic development.
+                </p>
+                <div class="social-links">
+                    <a href="#" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+    
+             <!-- Quick Links -->
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <a href="admission.html">>admission</a>
+                    <a href="acadmiccalander.html">>Academic calander</a>
+                    <a href="gallary.html">>school galary</a>
+                
+            </ul>
+        </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Maheshwari Public School<br>
+                            Education City, Knowledge Park<br>
+                            India
+                        </a>
+                    </li>
+                    <li><a href="tel:+911234567890"><i class="fas fa-phone"></i>+91 9116929333 </a></li>
+                    <li><a href="mailto:info@mps.com"><i class="fas fa-envelope"></i> mpspnjpr@mpspnjpr.com</a></li>
+                </ul>
+            </div>
+    
+            <!-- Newsletter -->
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p style="color: var(--text-color); margin-bottom: 1rem;">
+                    Subscribe to our newsletter for latest updates
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p style="color: var(--text-color);">
+                © 2024 Modern Public School. All rights reserved. 
+                <span style="display: block; margin-top: 0.5rem;">
+                    Designed with <i class="fas fa-heart" style="color: #ff512f;"></i> by Education Team
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            isDark = true;
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+    <script>
+        // Footer animation
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Animate list items with delay
+                    document.querySelectorAll('.footer-links li').forEach((li, index) => {
+                        setTimeout(() => {
+                            li.style.opacity = '1';
+                            li.style.transform = 'translateX(0)';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        footerObserver.observe(document.querySelector('#footer'));
+    
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            // Add your newsletter logic here
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+    <script>
+        // About section animation
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+    
+        aboutObserver.observe(document.querySelector('#about'));
+    
+        // Image hover effect
+        document.querySelectorAll('.floating-image').forEach(img => {
+            img.addEventListener('mouseenter', () => {
+                img.style.zIndex = '3';
+            });
+            img.addEventListener('mouseleave', () => {
+                img.style.zIndex = '1';
+            });
+        });
+    </script>
+    
+</body>
+</html>
